@@ -9,6 +9,8 @@ readme = "README.md"
 python = "3.13"
 textual = "^3.0.1"
 sqlmodel = "^0.0.24"
+asyncio = "^3.4.3"
+deepdiff = "^8.4.2"
 
 
 [tool.poetry.group.dev.dependencies]

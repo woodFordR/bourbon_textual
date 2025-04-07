@@ -1,5 +1,6 @@
 import uuid
 
+from textual import log
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, VerticalScroll
 from textual.reactive import reactive
@@ -22,13 +23,15 @@ new_mac = MacOS(
 
 class BourbonApp(App):
 
+    CSS_PATH = "bourbon.tcss"
     mac_os: reactive[MacOS] = reactive(MacOS)
 
     def __init__(self, new_mac: MacOS):
+        super().__init__()
         self.mac_os = MacOS.model_validate(new_mac)
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True, icon="🥃")
+        yield Header(show_clock=True, icon="🥃🥃🥃")
         yield Input(placeholder="enter name", name="name")
         yield Input(placeholder="enter IP", name="public_ip")
         yield Input(placeholder="enter status", name="status")
@@ -37,17 +40,23 @@ class BourbonApp(App):
         with VerticalScroll(id="response-container"):
             yield Markdown(id="response")
         with Horizontal(id="data-tree"):
-            yield Mac(new_mac).data_bind(BourbonApp.mac_os)
+            yield Mac(new_mac).data_bind(mac_os=BourbonApp.mac_os)
         yield Footer()
 
-    async def on_input_submitted(self, event: Input.Submitted, input: Input) -> None:
-        if input.Submitted.value:
-            await self.update_mac_os(str(input.name) or "", input.Submitted.value)
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
+        log("Input Submitted")
+        if event.input.value:
+            await self.update_mac_os(str(event.input.name) or "", event.input.value)
         else:
-            await self.query_one("#response", Markdown).update(f"you suck.")
+            await self.query_one("#response", Markdown).update(f"you empty.")
 
     async def update_mac_os(self, name: str, value: str):
-        setattr(self.mac_os, name, value)
+        if name and value:
+            log("Input Updating")
+            setattr(self.mac_os, name, value)
+            self.mutate_reactive(BourbonApp.mac_os)
+        else:
+            self.notify("Error")
 
 
 if __name__ == "__main__":
