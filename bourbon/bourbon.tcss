@@ -3,5 +3,5 @@ Tree {
 }
 
 .in-progress {
-  background: yellow;
+  background: blue;
 }

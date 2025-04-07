@@ -20,7 +20,7 @@ default_state = "stopped"
 class Mac(Horizontal):
 
     # state_box: reactive[List[Tuple[UUID, str]]] = reactive(List[Tuple[default_uuid, str(default_state)]])
-    mac_os: reactive[MacOS] = reactive(MacOS, recompose=True)
+    mac_os: reactive[MacOS] = reactive(MacOS)
 
     def __init__(self, new_mac: MacOS) -> None:
         super().__init__()
@@ -46,23 +46,23 @@ class Mac(Horizontal):
             return None
         log("update_tree_leaf")
         log(field)
-        tree_leaf = self.query()
+        tree_leaf = self.query(Tree)
         # if tree_leaf.styles.background == "black 10%":
         #     tree_leaf.set_styles.background = "green 10%"
         # if tree_leaf.styles.background == "green 10%":
         #     tree_leaf.set_styles.background = "black 10%"
         # else:
         #     tree_leaf.set_styles.background = "black 10%"
-        self.toggle_class("in-progress")
-        await asyncio.sleep(3)
         tree_leaf.toggle_class("in-progress")
+        # await asyncio.sleep(3)
         # tree_leaf.label.styles.animate("backgroundcolor", value="green", duration=2.0)
         self.log("COMPLETE!!!")
 
     @work
-    async def watch_mac_os(self, old_mac, new_mac):
-        diffs = DeepDiff(old_mac, new_mac)
+    async def watch_mac_os(self, old_mac_os, new_mac_os):
+        diffs = DeepDiff(old_mac_os, new_mac_os)
 
+        self.log(diffs)
         await self.update_tree_leaf("name")
 
         if "values_changed" in diffs.keys():
