@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from textual import work
 from textual.app import ComposeResult
+from textual.color import Color
 from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import Tree
@@ -93,3 +94,10 @@ class ComputerDeets(Widget):
         for tree in self.query(TopTree):
             if tree:
                 tree.styles.animate("opacity", value=0.5, duration=0.5)
+                tree.styles.animate("opacity", 1.1, duration=0.5, delay=2.0)
+                tree.styles.animate(
+                    "background",
+                    value="slategrey",
+                    final_value="navy",
+                    duration=2.0,
+                )
