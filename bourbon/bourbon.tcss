@@ -1,12 +1,42 @@
+$primary: #7FFFD4;
+$aquay:   #7FFFD4;
+$error:   #C71585;
+$bluey:   #8A2BE2;
+$success: #8A2BE2;
+$goldy:   #DAA520;
+$surface: #808000;
+$olivey:  #808000;
+$redvio:  #C71585;
+
+
 .start {
-  color: green;
+  color: $olivey;
 }
 
 .progress {
-  background: red;
+  background: $redvio;
 }
 
 .submit {
-  background: blue;
+  background: $bluey;
+}
+
+
+Bar {
+    width: 32;
+    height: 1;
+
+    &> .bar--bar {
+        color: $primary;
+        background: $goldy;
+    }
+    &> .bar--indeterminate {
+        color: $error;
+        background: $goldy;
+    }
+    &> .bar--complete {
+        color: $success;
+        background: $surface;
+    }
 }
 

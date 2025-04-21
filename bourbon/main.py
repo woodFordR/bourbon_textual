@@ -7,7 +7,7 @@ from textual.containers import Horizontal, VerticalScroll
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
-from textual.widgets import Footer, Header, Input, Markdown
+from textual.widgets import Footer, Header, Input, Markdown, ProgressBar
 
 logging.basicConfig(
     level="DEBUG",
@@ -40,26 +40,25 @@ STARTER_MAC = MacOS(
 )
 
 
-# arctic_theme = Theme(
-#     name="aquamarine",
-#     primary="#88C0D0",
-#     secondary="#81A1C1",
-#     accent="#B48EAD",
-#     foreground="#D8DEE9",
-#     background="#2E3440",
-#     success="#A3BE8C",
-#     warning="#EBCB8B",
-#     error="#BF616A",
-#     surface="#3B4252",
-#     panel="#434C5E",
-#     dark=True,
-#     variables={
-#         "block-cursor-text-style": "none",
-#         "footer-key-foreground": "#88C0D0",
-#         "input-selection-background": "#81a1c1 35%",
-#     },
-# )
-#
+aquamarine_theme = Theme(
+    name="aquamarine",
+    primary="#88C0D0",
+    secondary="#81A1C1",
+    accent="#B48EAD",
+    foreground="#D8DEE9",
+    background="#2E3440",
+    success="#A3BE8C",
+    warning="#EBCB8B",
+    error="#BF616A",
+    surface="#3B4252",
+    panel="#434C5E",
+    dark=True,
+    variables={
+        "block-cursor-text-style": "none",
+        "footer-key-foreground": "#88C0D0",
+        "input-selection-background": "#81a1c1 35%",
+    },
+)
 
 
 class BourbonApp(App):
@@ -91,10 +90,15 @@ class BourbonApp(App):
     @work(exclusive=True)
     async def update_mac_os(self, name: str, value: str):
         if name and value:
+            ProgressBar()
             setattr(self.mac_os, name, value)
             self.mutate_reactive(BourbonApp.mac_os)
         else:
             self.notify("Error")
+
+    def on_mount(self) -> None:
+        self.register_theme(aquamarine_theme)
+        self.theme = "aquamarine"
 
 
 if __name__ == "__main__":

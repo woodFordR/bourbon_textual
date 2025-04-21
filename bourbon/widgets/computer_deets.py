@@ -2,10 +2,10 @@ from uuid import uuid4
 
 from textual import work
 from textual.app import ComposeResult
-from textual.color import Color
+from textual.color import Color, Gradient
 from textual.reactive import reactive
 from textual.widget import Widget
-from textual.widgets import Tree
+from textual.widgets import ProgressBar, Tree
 
 from bourbon.models.types import MacOS
 
@@ -97,7 +97,7 @@ class ComputerDeets(Widget):
                 tree.styles.animate("opacity", 1.1, duration=0.5, delay=2.0)
                 tree.styles.animate(
                     "background",
-                    value="slategrey",
-                    final_value="navy",
+                    value="mediumvioletred",
+                    final_value="lightslategray",
                     duration=2.0,
                 )
