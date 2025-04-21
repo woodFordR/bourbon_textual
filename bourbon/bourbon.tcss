@@ -1,7 +1,12 @@
-Tree {
-  background: green;
+.start {
+  color: green;
 }
 
-.in-progress {
+.progress {
+  background: red;
+}
+
+.submit {
   background: blue;
 }
+

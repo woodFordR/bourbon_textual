@@ -11,6 +11,7 @@ textual = "^3.0.1"
 sqlmodel = "^0.0.24"
 asyncio = "^3.4.3"
 deepdiff = "^8.4.2"
+rich = "^14.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
