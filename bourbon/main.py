@@ -3,7 +3,8 @@ import uuid
 
 from textual import log, work
 from textual.app import App, ComposeResult
-from textual.containers import Horizontal, VerticalScroll
+from textual.color import Gradient
+from textual.containers import Horizontal, Vertical
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
@@ -71,26 +72,44 @@ class BourbonApp(App):
         self.mac_os = MacOS.model_validate(new_mac)
 
     def compose(self) -> ComposeResult:
+        gradient = Gradient.from_colors(
+            "#881177",
+            "#aa3355",
+            "#cc6666",
+            "#ee9944",
+            "#eedd00",
+            "#99dd55",
+            "#44dd88",
+            "#22ccbb",
+            "#00bbcc",
+            "#0099cc",
+            "#3366bb",
+            "#663399",
+        )
         yield Header(show_clock=True, icon="🥃🥃🥃")
-        yield Input(placeholder="enter name", name="name")
-        yield Input(placeholder="enter IP", name="public_ip")
-        yield Input(placeholder="enter status", name="status")
-        yield Input(placeholder="enter memory", name="memory")
-        yield Input(placeholder="enter operating system", name="mac_os")
-        with VerticalScroll(id="response-container"):
-            yield Markdown(id="response")
+        with Horizontal(id="data-inputs"):
+            with Vertical():
+                yield Input(placeholder="enter name", name="name")
+                yield Input(placeholder="enter IP", name="public_ip")
+                yield Input(placeholder="enter status", name="status")
+                yield Input(placeholder="enter memory", name="memory")
+                yield Input(placeholder="enter operating system", name="mac_os")
         with Horizontal(id="data-tree"):
             yield ComputerDeets(self.mac_os).data_bind(mac_os=BourbonApp.mac_os)
+        with Horizontal(id="progress-bar"):
+            yield ProgressBar(total=100, gradient=gradient)
         yield Footer()
 
     async def on_input_submitted(self, event: Input.Submitted) -> None:
         log("Input Submitted")
         self.update_mac_os(str(event.input.name), event.input.value)
 
+    def key_space(self):
+        self.query_one(ProgressBar).advance(5)
+
     @work(exclusive=True)
     async def update_mac_os(self, name: str, value: str):
         if name and value:
-            ProgressBar()
             setattr(self.mac_os, name, value)
             self.mutate_reactive(BourbonApp.mac_os)
         else:

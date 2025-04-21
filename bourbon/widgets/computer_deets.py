@@ -21,21 +21,21 @@ class TopTree(Tree):
     TREE_GUIDES: dict[str, tuple[str, str, str, str]] = {
         "default": (
             "    ",
-            "⫷─  ",
-            "⫷── ",
-            "⫷───",
+            "  ─⫸",
+            " ──⫸",
+            "───⫸",
         ),
         "bold": (
             "    ",
-            "⫷━  ",
-            "⫷━━ ",
-            "⫷━━━",
+            "  ━⫸",
+            " ━━⫸",
+            "━━━⫸",
         ),
         "double": (
             "    ",
-            "⫷═  ",
-            "⫷══ ",
-            "⫷═══",
+            "  ═⫸",
+            " ══⫸",
+            "═══⫸",
         ),
     }
 
@@ -82,6 +82,7 @@ class ComputerDeets(Widget):
             label=self.TREE_LABELS[0],
         )
         tree.root.expand()
+        tree.set_class(True, "box")
         characters = tree.root.add(label=self.TREE_LABELS[1], before=1, expand=True)
         characters.add(self.TREE_LABELS[2], before=2)
         characters.add(self.TREE_LABELS[3], before=3)
@@ -91,6 +92,7 @@ class ComputerDeets(Widget):
 
     @work(exclusive=True)
     async def watch_mac_os(self):
+        # cubic-bezier(.4,.24,.09,1.57)
         for tree in self.query(TopTree):
             if tree:
                 tree.styles.animate("opacity", value=0.5, duration=0.5)
