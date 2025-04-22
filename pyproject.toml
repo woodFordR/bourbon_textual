@@ -1,22 +1,32 @@
 [tool.poetry]
 name = "bourbon"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Adam Kaewell <adam@kaewell.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.13"
-textual = "^3.0.1"
+python = "^3.8.1"
+textual = "^0.43.0"
 sqlmodel = "^0.0.24"
 asyncio = "^3.4.3"
-deepdiff = "^8.4.2"
 rich = "^14.0.0"
+pydantic = "^2.1.1"
+click = "^8.1.3"
+xdg = "^6.0.0"
+msgpack = "^1.0.5"
+httpx = ">=0.24.1"
+importlib-metadata = ">=4.11.3"
+tomli = "^2.0.1"
 
-
-[tool.poetry.group.dev.dependencies]
-textual-dev = "^1.7.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+includes = "bourbon"
+
+[tool.poetry.scripts]
+textual-web = "bourbon.main:bourbon"
+
