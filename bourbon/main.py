@@ -1,6 +1,9 @@
+import asyncio
 import logging
+import sys
 import uuid
 
+import uvloop
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -116,10 +119,26 @@ class BourbonApp(App):
             self.notify("Error")
 
     def on_mount(self) -> None:
-        self.register_theme(aquamarine_theme)
+        self._register(aquamarine_theme)
         self.theme = "aquamarine"
 
 
-if __name__ == "__main__":
+# -----
+# -----
+# -----
+# -----
+# -----
+async def main():
     app = BourbonApp(STARTER_MAC)
-    app.run()
+    await app.run_async()
+
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+runner = asyncio.Runner(loop_factory=uvloop.new_event_loop)
+runner.run(main())
+# -----
+# -----
+# -----
+# if sys.version_info >= (3, 11):
+#     with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
+#         runner.run(app.run())
