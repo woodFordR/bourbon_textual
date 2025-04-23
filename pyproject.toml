@@ -1,22 +1,26 @@
-[tool.poetry]
+[project]
 name = "bourbon"
 version = "0.1.0"
 description = ""
-authors = ["Adam Kaewell <adam@kaewell.com>"]
 readme = "README.md"
+authors = [
+    {name = "Adam Kaewell", email = "adam@kaewell.com"},
+]
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "textual >=3.0.1,<4.0.0",
+    "sqlmodel >=0.0.24,<1.0.0",
+    "asyncio >=3.4.3,<4.0.0",
+    "deepdiff >=8.4.2,<9.0.0",
+    "rich >=14.0.0,<15.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "3.13"
-textual = "^3.0.1"
-sqlmodel = "^0.0.24"
-asyncio = "^3.4.3"
-deepdiff = "^8.4.2"
-rich = "^14.0.0"
 
+[dependency-groups]
+dev = [
+    "textual-dev >=1.7.0,<2.0.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-textual-dev = "^1.7.0"
+[tool.uv]
+default-groups = []
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
