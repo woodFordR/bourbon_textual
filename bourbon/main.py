@@ -1,6 +1,7 @@
 import logging
 import uuid
 
+from models.types import MacOS
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -8,16 +9,14 @@ from textual.containers import Horizontal, Vertical
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
-from textual.widgets import Footer, Header, Input, Markdown, ProgressBar
+from textual.widgets import Footer, Header, Input, ProgressBar
+from widgets.computer_deets import ComputerDeets
 
 logging.basicConfig(
     level="DEBUG",
     handlers=[TextualHandler()],
 )
 
-
-from bourbon.models.types import MacOS
-from bourbon.widgets.computer_deets import ComputerDeets
 
 trial_uuid = uuid.uuid4()
 trial_uuid2 = uuid.uuid4()
