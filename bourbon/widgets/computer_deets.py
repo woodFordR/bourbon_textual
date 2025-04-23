@@ -2,10 +2,9 @@ from uuid import uuid4
 
 from textual import work
 from textual.app import ComposeResult
-from textual.color import Color, Gradient
 from textual.reactive import reactive
 from textual.widget import Widget
-from textual.widgets import ProgressBar, Tree
+from textual.widgets import Tree
 
 from bourbon.models.types import MacOS
 
@@ -68,7 +67,7 @@ class ComputerDeets(Widget):
             self.mac_os = MacOS.model_validate(new_mac)
             self.id = "computer_widget"
             self.TREE_LABELS = [
-                f"a bourbon oaky mist",
+                "a bourbon oaky mist",
                 f"name: {self.mac_os.name}",
                 f"selfie: {self.mac_os.mac_os}",
                 f"memory: {self.mac_os.memory}GBs",

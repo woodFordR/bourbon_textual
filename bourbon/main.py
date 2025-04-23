@@ -1,9 +1,12 @@
 import asyncio
-import logging
-import sys
-import uuid
 
 import uvloop
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
+import logging
+import uuid
+
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -13,14 +16,14 @@ from textual.reactive import reactive
 from textual.theme import Theme
 from textual.widgets import Footer, Header, Input, Markdown, ProgressBar
 
+from bourbon.models.types import MacOS
+from bourbon.widgets.computer_deets import ComputerDeets
+
 logging.basicConfig(
     level="DEBUG",
     handlers=[TextualHandler()],
 )
 
-
-from bourbon.models.types import MacOS
-from bourbon.widgets.computer_deets import ComputerDeets
 
 trial_uuid = uuid.uuid4()
 trial_uuid2 = uuid.uuid4()
@@ -70,7 +73,7 @@ class BourbonApp(App):
     CSS_PATH = "bourbon.tcss"
     mac_os: reactive[MacOS] = reactive(MacOS, recompose=True)
 
-    def __init__(self, new_mac: MacOS):
+    def __init__(self, new_mac: MacOS = STARTER_MAC):
         super().__init__()
         self.mac_os = MacOS.model_validate(new_mac)
 
@@ -118,8 +121,8 @@ class BourbonApp(App):
         else:
             self.notify("Error")
 
-    def on_mount(self) -> None:
-        self._register(aquamarine_theme)
+    async def on_mount(self) -> None:
+        self.register_theme(aquamarine_theme)
         self.theme = "aquamarine"
 
 
@@ -128,17 +131,20 @@ class BourbonApp(App):
 # -----
 # -----
 # -----
+# Main entry-point.
+
+
 async def main():
-    app = BourbonApp(STARTER_MAC)
-    await app.run_async()
+    app = BourbonApp()
+    app.run()
 
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-runner = asyncio.Runner(loop_factory=uvloop.new_event_loop)
-runner.run(main())
-# -----
-# -----
-# -----
-# if sys.version_info >= (3, 11):
-#     with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
-#         runner.run(app.run())
+f = asyncio.Runner(loop_factory=uvloop.new_event_loop)
+
+try:
+    f.run(main())
+except:
+    uvloop.install()
+    asyncio.run(main())
+finally:
+    f.close()
