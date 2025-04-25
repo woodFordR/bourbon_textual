@@ -1,7 +1,8 @@
+import asyncio
 import logging
 import uuid
 
-from models.types import MacOS
+import uvloop
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -10,7 +11,9 @@ from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
 from textual.widgets import Footer, Header, Input, ProgressBar
-from widgets.computer_deets import ComputerDeets
+
+from bourbon.models.types import MacOS
+from bourbon.widgets.computer_deets import ComputerDeets
 
 logging.basicConfig(
     level="DEBUG",
@@ -119,6 +122,12 @@ class BourbonApp(App):
         self.theme = "aquamarine"
 
 
-if __name__ == "__main__":
+async def main():
     app = BourbonApp(STARTER_MAC)
     app.run()
+
+
+if __name__ == "__main__":
+    with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
+        runner.run(main())
+    uvloop.run(main())

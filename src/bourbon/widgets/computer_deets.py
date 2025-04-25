@@ -1,12 +1,13 @@
 from uuid import uuid4
 
-from models.types import MacOS
 from textual import work
 from textual.app import ComposeResult
 from textual.color import Color, Gradient
 from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import ProgressBar, Tree
+
+from bourbon.models.types import MacOS
 
 default_uuid = uuid4()
 default_state = "stopped"
