@@ -38,26 +38,7 @@ Screen {
   width: 1fr;
 }
 
-Bar {
-  width: 32;
-  height: 32;
-
-  &> .bar--bar {
-      color: $olivey;
-      background: $goldy 30%;
-  }
-  &> .bar--indeterminate {
-      color: $error;
-      background: $goldy;
-  }
-  &> .bar--complete {
-      color: $success;
-      background: $goldy;
-  }
-}
-
 PercentageStatus {
-  text-style: reverse;
   color: $aquay;
 }
 

@@ -58,7 +58,7 @@ class TopTree(Tree):
 
 class ComputerDeets(Widget):
 
-    mac_os: reactive[MacOS] = reactive(MacOS)
+    mac_os: reactive[MacOS] = reactive(MacOS, recompose=True)
     show_guides = reactive(True)
     show_root = reactive(True)
 
@@ -96,7 +96,7 @@ class ComputerDeets(Widget):
         for tree in self.query(TopTree):
             if tree:
                 tree.styles.animate("opacity", value=0.5, duration=0.5)
-                tree.styles.animate("opacity", 1.1, duration=0.5, delay=2.0)
+                tree.styles.animate("opacity", 1.0, duration=0.5, delay=2.0)
                 tree.styles.animate(
                     "background",
                     value="mediumvioletred",

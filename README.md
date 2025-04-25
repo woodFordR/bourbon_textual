@@ -1,18 +1,40 @@
 ## The Bourbon 🥃 Textual App
 ---
+---
 ## Woodford <woody@woodford.life>
 ---
+---
 ### Application Development
-
  - creation of a python textual application
  - sqlmodel with typing for read, update models
  - simple input and tree widgets with horizontal containers
+---
 
 ---
 ### How to run
-
- - `poetry shell`
- - `poetry install`
- - `poetry run python bourbon/main.py`
+ - `uv python --managed-python install 3.13.3`
+ - `uv python pin 3.13.3`
+ - `uv venv -p 3.13`
+ - `source .venv/bin/activate`
+ - `uv pip install -U pip`
+ - `uv pip install -r pyproject.toml --all-extras`
+ - `uv pip install -r pyproject.toml --group=dev`
+---
 
 ---
+### `pyproject.toml` needs
+- [build-system]
+- requires = ["setuptools", "wheel", "pip"]
+- build-backend = "setuptools.build_meta"
+---
+
+---
+#### Running application in terminal
+ - `uv run -- textual run src/bourbon/main.py`
+#### Running dev console with app
+ - application:
+    - `uv run -- textual run --dev src/bourbon/main.py`
+ - dev console
+    - `uv run -- textual console -x SYSTEM -x WARN -x EVENT`
+---
+
