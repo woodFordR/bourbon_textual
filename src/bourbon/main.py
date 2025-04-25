@@ -3,6 +3,9 @@ import logging
 import uuid
 
 import uvloop
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -122,12 +125,6 @@ class BourbonApp(App):
         self.theme = "aquamarine"
 
 
-async def main():
-    app = BourbonApp(STARTER_MAC)
-    app.run()
-
-
 if __name__ == "__main__":
-    with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
-        runner.run(main())
-    uvloop.run(main())
+    app: App = BourbonApp(STARTER_MAC)
+    app.run()
