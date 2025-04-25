@@ -3,9 +3,6 @@ import logging
 import uuid
 
 import uvloop
-
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-
 from textual import log, work
 from textual.app import App, ComposeResult
 from textual.color import Gradient
@@ -13,7 +10,7 @@ from textual.containers import Horizontal, Vertical
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
-from textual.widgets import Footer, Header, Input, ProgressBar
+from textual.widgets import Button, Footer, Header, Input, ProgressBar
 
 from bourbon.models.types import MacOS
 from bourbon.widgets.computer_deets import ComputerDeets
@@ -23,6 +20,7 @@ logging.basicConfig(
     handlers=[TextualHandler()],
 )
 
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 trial_uuid = uuid.uuid4()
 trial_uuid2 = uuid.uuid4()
@@ -108,9 +106,7 @@ class BourbonApp(App):
     async def on_input_submitted(self, event: Input.Submitted) -> None:
         log("Input Submitted")
         self.update_mac_os(str(event.input.name), event.input.value)
-
-    def key_space(self):
-        self.query_one(ProgressBar).advance(5)
+        self.query_one(ProgressBar).advance(50)
 
     @work(exclusive=True)
     async def update_mac_os(self, name: str, value: str):
