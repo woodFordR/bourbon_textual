@@ -29,7 +29,12 @@
 ---
 
 ---
-### Running Application
- - `uv run -- textual run --dev src/bourbon/main.py`
+#### Running application in terminal
+ - `uv run -- textual run src/bourbon/main.py`
+#### Running dev console with app
+ - application:
+    - `uv run -- textual run --dev src/bourbon/main.py`
+ - dev console
+    - `uv run -- textual console -x SYSTEM -x WARN -x EVENT`
 ---
 
