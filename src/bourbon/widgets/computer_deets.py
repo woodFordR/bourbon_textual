@@ -58,7 +58,7 @@ class TopTree(Tree):
 
 class ComputerDeets(Widget):
 
-    mac_os: reactive[MacOS] = reactive(MacOS)
+    mac_os: reactive[MacOS] = reactive(MacOS, recompose=True)
     show_guides = reactive(True)
     show_root = reactive(True)
 
