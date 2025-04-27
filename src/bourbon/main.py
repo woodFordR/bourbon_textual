@@ -5,7 +5,7 @@ import uuid
 import uvloop
 from textual import log, work
 from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical
+from textual.containers import Center, Horizontal, Vertical
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
@@ -86,7 +86,8 @@ class BourbonApp(App):
         with Horizontal(id="data-tree"):
             yield ComputerDeets(self.mac_os).data_bind(mac_os=BourbonApp.mac_os)
         with Horizontal(id="progress-bar"):
-            yield StyledProgressBar()
+            with Center():
+                yield StyledProgressBar()
         yield Footer()
 
     def on_input_submitted(self, event: Input.Submitted) -> None:

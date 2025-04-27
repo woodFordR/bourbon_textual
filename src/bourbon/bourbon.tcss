@@ -27,6 +27,10 @@ Screen {
   layout: grid;
   grid-size: 3;
   grid-rows: 6fr 2fr 2fr;
+
+  #progress-bar {
+    align: center middle;
+  }
 }
 
 .box {
