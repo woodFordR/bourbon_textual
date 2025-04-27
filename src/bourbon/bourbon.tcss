@@ -27,12 +27,11 @@ Screen {
   layout: grid;
   grid-size: 3;
   grid-rows: 6fr 2fr 2fr;
-  layers: below above
+  layers: below above;
 
   #progress-bar {
-    layer: above
-    align: center middle;
-    content-align: center-middle;
+    layer: above;
+    content-align: center middle;
   }
 }
 

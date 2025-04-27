@@ -2,58 +2,14 @@ from uuid import uuid4
 
 from textual import work
 from textual.app import ComposeResult
-from textual.color import Color, Gradient
 from textual.reactive import reactive
 from textual.widget import Widget
-from textual.widgets import ProgressBar, Tree
 
 from bourbon.models.types import MacOS
+from bourbon.widgets.styled_tree import TopTree
 
 default_uuid = uuid4()
 default_state = "stopped"
-
-
-class TopTree(Tree):
-
-    ICON_NODE = "⫸ "
-    ICON_NODE_EXPANDED = "⨈ "
-
-    TREE_GUIDES: dict[str, tuple[str, str, str, str]] = {
-        "default": (
-            "    ",
-            "  ─⫸",
-            " ──⫸",
-            "───⫸",
-        ),
-        "bold": (
-            "    ",
-            "  ━⫸",
-            " ━━⫸",
-            "━━━⫸",
-        ),
-        "double": (
-            "    ",
-            "  ═⫸",
-            " ══⫸",
-            "═══⫸",
-        ),
-    }
-
-    def __init__(
-        self,
-        label,
-        data=None,
-        *,
-        id,
-    ) -> None:
-        super().__init__(
-            label=label,
-            data=data,
-            name=None,
-            id=None,
-            classes=None,
-            disabled=False,
-        )
 
 
 class ComputerDeets(Widget):
