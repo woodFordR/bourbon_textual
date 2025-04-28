@@ -26,13 +26,6 @@ trial_uuid = uuid.uuid4()
 trial_uuid2 = uuid.uuid4()
 trial_state = str("running")
 
-TREE_LABELS = [
-    "name",
-    "mac_os",
-    "memory",
-    "status",
-    "public_ip",
-]
 
 STARTER_MAC = MacOS(
     id=trial_uuid2,
@@ -68,7 +61,7 @@ aquamarine_theme = Theme(
 class BourbonApp(App):
 
     CSS_PATH = "bourbon.tcss"
-    mac_os: reactive[MacOS] = reactive(MacOS, recompose=True)
+    mac_os: reactive[MacOS] = reactive(MacOS)
 
     def __init__(self, new_mac: MacOS):
         super().__init__()
@@ -79,37 +72,23 @@ class BourbonApp(App):
         with TabbedContent():
             with TabPane(f"{(self.mac_os.name).lower()}"):
                 with Center(id="data-center"):
-                    with Horizontal(id="data-inputs"):
-                        with Vertical():
-                            yield Input(placeholder="enter name", name="name")
-                            yield Input(placeholder="enter IP", name="public_ip")
-                            yield Input(placeholder="enter status", name="status")
-                            yield Input(placeholder="enter memory", name="memory")
-                            yield Input(
-                                placeholder="enter operating system", name="mac_os"
-                            )
-                    with Horizontal(id="data-tree"):
-                        yield ComputerDeets(self.mac_os).data_bind(
-                            mac_os=BourbonApp.mac_os
-                        )
+                    yield ComputerDeets(self.mac_os)
             with TabPane("progress-tab"):
                 with Horizontal(id="progress-bar"):
                     with Center():
                         yield StyledProgressBar()
         yield Footer()
 
-    def on_input_submitted(self, event: Input.Submitted) -> None:
-        log("Input Submitted")
+    def on_computer_deets_deets_changed(
+        self, event: ComputerDeets.DeetsChanged
+    ) -> None:
+        self.log("Input Submitted")
+        progress_bar = self.query_one(StyledProgressBar)
+        progress_bar.add_progress
+        self.notify("Loading ...")
         self.query_one(StyledProgressBar).add_progress
-        self.update_mac_os(str(event.input.name), event.input.value)
-
-    @work(exclusive=True)
-    async def update_mac_os(self, name: str, value: str):
-        if name and value:
-            setattr(self.mac_os, name, value)
-            self.mutate_reactive(BourbonApp.mac_os)
-        else:
-            self.notify("Error")
+        self.notify("Still Loading ...")
+        self.log(event)
 
     def on_mount(self) -> None:
         self.register_theme(aquamarine_theme)

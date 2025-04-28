@@ -11,6 +11,7 @@ $olivey:  #808000;
 $redvio:  #C71585;
 
 Header {
+  layer: above;
 }
 
 .start {
@@ -25,19 +26,9 @@ Header {
   background: $bluey;
 }
 
-Screen {
-  
-  layers: below above;
 
-  #data-center{
-    layout: grid;
-    grid-size: 2;
-    }
-
-  #progress-bar {
-    layer: above;
-    content-align: center middle;
-  }
+#progress-bar {
+  content-align: center middle;
 }
 
 .box {
@@ -45,8 +36,8 @@ Screen {
   border: solid green;
 }
 
-.column {
-  width: 1fr;
+
+#data-inputs{
 }
 
 PercentageStatus {
