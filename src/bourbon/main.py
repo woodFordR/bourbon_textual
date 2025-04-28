@@ -9,7 +9,7 @@ from textual.containers import Center, Horizontal, Vertical
 from textual.logging import TextualHandler
 from textual.reactive import reactive
 from textual.theme import Theme
-from textual.widgets import Footer, Header, Input
+from textual.widgets import Footer, Header, Input, TabbedContent, TabPane
 
 from bourbon.models.types import MacOS
 from bourbon.widgets.computer_deets import ComputerDeets
@@ -76,18 +76,26 @@ class BourbonApp(App):
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True, icon="🥃🥃🥃")
-        with Horizontal(id="data-inputs"):
-            with Vertical():
-                yield Input(placeholder="enter name", name="name")
-                yield Input(placeholder="enter IP", name="public_ip")
-                yield Input(placeholder="enter status", name="status")
-                yield Input(placeholder="enter memory", name="memory")
-                yield Input(placeholder="enter operating system", name="mac_os")
-        with Horizontal(id="data-tree"):
-            yield ComputerDeets(self.mac_os).data_bind(mac_os=BourbonApp.mac_os)
-        with Horizontal(id="progress-bar"):
-            with Center():
-                yield StyledProgressBar()
+        with TabbedContent():
+            with TabPane(f"{(self.mac_os.name).lower()}"):
+                with Center(id="data-center"):
+                    with Horizontal(id="data-inputs"):
+                        with Vertical():
+                            yield Input(placeholder="enter name", name="name")
+                            yield Input(placeholder="enter IP", name="public_ip")
+                            yield Input(placeholder="enter status", name="status")
+                            yield Input(placeholder="enter memory", name="memory")
+                            yield Input(
+                                placeholder="enter operating system", name="mac_os"
+                            )
+                    with Horizontal(id="data-tree"):
+                        yield ComputerDeets(self.mac_os).data_bind(
+                            mac_os=BourbonApp.mac_os
+                        )
+            with TabPane("progress-tab"):
+                with Horizontal(id="progress-bar"):
+                    with Center():
+                        yield StyledProgressBar()
         yield Footer()
 
     def on_input_submitted(self, event: Input.Submitted) -> None:

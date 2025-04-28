@@ -26,10 +26,13 @@ Header {
 }
 
 Screen {
-  layout: grid;
-  grid-size: 3;
-  grid-rows: 6fr 2fr 2fr;
+  
   layers: below above;
+
+  #data-center{
+    layout: grid;
+    grid-size: 2;
+    }
 
   #progress-bar {
     layer: above;
