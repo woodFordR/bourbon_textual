@@ -1,5 +1,3 @@
-
-
 $primary: #7FFFD4;
 $aquay:   #7FFFD4;
 $error:   #C71585;
@@ -11,29 +9,38 @@ $olivey:  #808000;
 $redvio:  #C71585;
 
 Header {
-  layer: above;
+}
+
+Screen{
+
+}
+ComputerDeets {
+    layout: grid;
+    grid-size: 2;
+    grid-columns: 1fr 1fr;
+    grid-rows: 5fr 1fr;
+  
 }
 
 .start {
-  color: $olivey;
+    color: $olivey;
 }
 
 .progress {
-  background: $redvio;
+    background: $redvio;
 }
 
 .submit {
-  background: $bluey;
+    background: $bluey;
 }
 
-
 #progress-bar {
-  content-align: center middle;
+    content-align: center middle;
 }
 
 .box {
-  height: 100%;
-  border: solid green;
+    height: 100%;
+    border: solid green;
 }
 
 
@@ -41,11 +48,11 @@ Header {
 }
 
 PercentageStatus {
-  color: $aquay;
+    color: $aquay;
 }
 
 ETAStatus {
-  text-style: underline;
+    text-style: underline;
 }
 
 

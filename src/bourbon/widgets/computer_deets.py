@@ -38,8 +38,8 @@ class ComputerDeets(Widget):
     def __init__(self, new_mac: MacOS) -> None:
         super().__init__()
         if MacOS:
-            self.mac_os = MacOS.model_validate(new_mac)
-            self.id = "computer_widget"
+            self.mac_os = new_mac.model_copy()
+            self.id = f"computer-deets-{new_mac.id}"
             self.TREE_LABELS = [
                 f"a bourbon oaky mist",
                 f"name: {self.mac_os.name}",
@@ -48,10 +48,16 @@ class ComputerDeets(Widget):
                 f"status: {self.mac_os.status}",
                 f"public ip: {self.mac_os.public_ip}",
             ]
+            self.log(
+                "Tree data: ",
+                mac_os=self.mac_os,
+                id=self.id,
+                tree_labels=self.TREE_LABELS,
+            )
 
     def compose(self) -> ComposeResult:
         tree = TopTree(
-            id=f"tree_id_{str(self.mac_os.id)[0:4]}",
+            id=f"tree-id-{str(self.mac_os.id)[0:4]}",
             label=self.TREE_LABELS[0],
         )
         tree.root.expand()
@@ -61,22 +67,22 @@ class ComputerDeets(Widget):
         characters.add(self.TREE_LABELS[3], before=3)
         characters.add(self.TREE_LABELS[4], before=4)
         characters.add(self.TREE_LABELS[5], before=5)
+        self.log("Constructing Tree: ...", tree=tree)
 
-        with Horizontal(id="data-inputs"):
-            with Vertical():
-                yield Input(placeholder="enter name", name="name")
-                yield Input(placeholder="enter IP", name="public_ip")
-                yield Input(placeholder="enter status", name="status")
-                yield Input(placeholder="enter memory", name="memory")
-                yield Input(placeholder="enter operating system", name="mac_os")
-            with Vertical():
-                yield tree
+        with Vertical():
+            yield Input(placeholder="enter name", name="name")
+            yield Input(placeholder="enter IP", name="public_ip")
+            yield Input(placeholder="enter status", name="status")
+            yield Input(placeholder="enter memory", name="memory")
+            yield Input(placeholder="enter operating system", name="mac_os")
+        with Vertical():
+            yield tree
 
     @on(Input.Submitted)
     def handle_input_submit(self, event: Input.Submitted):
         if event.input and event.input.name:
             self.post_message(self.DeetsChanged(event.input.name, event.input.value))
-        self.update_mac_os(str(event.input.name), event.input.value)
+            self.update_mac_os(str(event.input.name), event.input.value)
 
     @work(exclusive=True)
     async def watch_mac_os(self):

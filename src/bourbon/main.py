@@ -69,14 +69,14 @@ class BourbonApp(App):
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True, icon="🥃🥃🥃")
-        with TabbedContent():
-            with TabPane(f"{(self.mac_os.name).lower()}"):
-                with Center(id="data-center"):
+        with TabbedContent(f"tabbed-content-{self.mac_os.id}"):
+            with TabPane(f"tab-pane-{self.mac_os.name}"):
+                with Horizontal(id=f"horizontal-{self.mac_os.name}"):
+                    # yield StyledProgressBar(disable=True)
                     yield ComputerDeets(self.mac_os)
-            with TabPane("progress-tab"):
-                with Horizontal(id="progress-bar"):
-                    with Center():
-                        yield StyledProgressBar()
+            with TabPane(f"tab-pane-progress-bar"):
+                with Horizontal(id="horizontal-progress-bar"):
+                    yield StyledProgressBar(disable=True)
         yield Footer()
 
     def on_computer_deets_deets_changed(
