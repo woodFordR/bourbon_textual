@@ -1,7 +1,7 @@
 from textual.widgets import Tree
 
 
-class TopTree(Tree):
+class StyledTree(Tree):
 
     ICON_NODE = "⫸ "
     ICON_NODE_EXPANDED = "🢆 "

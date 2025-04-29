@@ -83,11 +83,7 @@ class BourbonApp(App):
         self, event: ComputerDeets.DeetsChanged
     ) -> None:
         self.log("Input Submitted")
-        progress_bar = self.query_one(StyledProgressBar)
-        progress_bar.add_progress
         self.notify("Loading ...")
-        self.query_one(StyledProgressBar).add_progress
-        self.notify("Still Loading ...")
         self.log(event)
 
     def on_mount(self) -> None:

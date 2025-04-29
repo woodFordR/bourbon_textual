@@ -9,7 +9,7 @@ from textual.widget import Widget
 from textual.widgets import Input
 
 from bourbon.models.types import MacOS
-from bourbon.widgets.styled_tree import TopTree
+from bourbon.widgets.styled_tree import StyledTree
 
 default_uuid = uuid4()
 default_state = "stopped"
@@ -41,12 +41,12 @@ class ComputerDeets(Widget):
             self.mac_os = new_mac.model_copy()
             self.id = f"computer-deets-{new_mac.id}"
             self.TREE_LABELS = [
-                f"a bourbon oaky mist",
-                f"name: {self.mac_os.name}",
-                f"selfie: {self.mac_os.mac_os}",
-                f"memory: {self.mac_os.memory}GBs",
-                f"status: {self.mac_os.status}",
-                f"public ip: {self.mac_os.public_ip}",
+                f"title: a bourbon oaky mist",
+                f"name: ",
+                f"selfie: ",
+                f"memory: ",
+                f"status: ",
+                f"public ip: ",
             ]
             self.log(
                 "Tree data: ",
@@ -56,17 +56,19 @@ class ComputerDeets(Widget):
             )
 
     def compose(self) -> ComposeResult:
-        tree = TopTree(
+        tree = StyledTree(
             id=f"tree-id-{str(self.mac_os.id)[0:4]}",
             label=self.TREE_LABELS[0],
         )
         tree.root.expand()
         tree.set_class(True, "box")
-        characters = tree.root.add(label=self.TREE_LABELS[1], before=1, expand=True)
-        characters.add(self.TREE_LABELS[2], before=2)
-        characters.add(self.TREE_LABELS[3], before=3)
-        characters.add(self.TREE_LABELS[4], before=4)
-        characters.add(self.TREE_LABELS[5], before=5)
+        characters = tree.root.add(
+            label=f"{self.TREE_LABELS[1]}{self.mac_os.name}", before=1, expand=True
+        )
+        characters.add(f"{self.TREE_LABELS[2]}{self.mac_os.public_ip}", before=2)
+        characters.add(f"{self.TREE_LABELS[3]}{self.mac_os.status}", before=3)
+        characters.add(f"{self.TREE_LABELS[4]}{self.mac_os.memory}MiBs", before=4)
+        characters.add(f"{self.TREE_LABELS[5]}{self.mac_os.mac_os}", before=5)
         self.log("Constructing Tree: ...", tree=tree)
 
         with Vertical():
@@ -87,7 +89,7 @@ class ComputerDeets(Widget):
     @work(exclusive=True)
     async def watch_mac_os(self):
         # cubic-bezier(.4,.24,.09,1.57)
-        for tree in self.query(TopTree):
+        for tree in self.query(StyledTree):
             if tree:
                 tree.styles.animate("opacity", value=0.5, duration=0.5)
                 tree.styles.animate("opacity", 1.0, duration=0.5, delay=2.0)
@@ -102,6 +104,9 @@ class ComputerDeets(Widget):
     @work(exclusive=True)
     async def update_mac_os(self, name: str, value: str):
         if name and value:
+            self.log(self.mac_os)
             setattr(self.mac_os, name, value)
+            self.log(self.mac_os)
+            self.mutate_reactive(ComputerDeets.mac_os)
         else:
             self.notify("Error")
