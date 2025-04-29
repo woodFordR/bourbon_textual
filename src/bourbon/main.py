@@ -79,12 +79,20 @@ class BourbonApp(App):
                     yield StyledProgressBar(disable=True)
         yield Footer()
 
-    def on_computer_deets_deets_changed(
+    async def on_computer_deets_deets_changed(
         self, event: ComputerDeets.DeetsChanged
     ) -> None:
-        self.log("Input Submitted")
+        self.log("Input Submitted", event)
         self.notify("Loading ...")
-        self.log(event)
+        self.screen.styles.animate(
+            "opacity",
+            transition="ease_in_ease_out",
+            value=0,
+            duration=3.0,
+            final_value=1.0,
+        )
+        await asyncio.sleep(3)
+        self.notify("Complete")
 
     def on_mount(self) -> None:
         self.register_theme(aquamarine_theme)
