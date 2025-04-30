@@ -11,43 +11,48 @@ $redvio:  #C71585;
 Header {
 }
 
+Screen{
+
+}
+ComputerDeets {
+    layout: grid;
+    grid-size: 2;
+    grid-columns: 1fr 1fr;
+    grid-rows: 5fr 1fr;
+  
+}
+
 .start {
-  color: $olivey;
+    color: $olivey;
 }
 
 .progress {
-  background: $redvio;
+    background: $redvio;
 }
 
 .submit {
-  background: $bluey;
+    background: $bluey;
 }
 
-Screen {
-  layout: grid;
-  grid-size: 3;
-  grid-rows: 6fr 2fr 2fr;
-
-  #progress-bar {
-    align: center middle;
-  }
+#progress-bar {
+    content-align: center middle;
 }
 
 .box {
-  height: 100%;
-  border: solid green;
+    height: 100%;
+    border: solid green;
 }
 
-.column {
-  width: 1fr;
+
+#data-inputs{
 }
 
 PercentageStatus {
-  color: $aquay;
+    color: $aquay;
 }
 
 ETAStatus {
-  text-style: underline;
+    text-style: underline;
 }
 
 

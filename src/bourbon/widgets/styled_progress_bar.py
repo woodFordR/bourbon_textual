@@ -8,7 +8,7 @@ from textual.widgets import Static
 class StyledProgressBar(Static):
     timer: Timer
 
-    def __init__(self):
+    def __init__(self, disable: bool = False):
         super().__init__()
         gradient = Gradient.from_colors(
             "#881177",
@@ -26,7 +26,9 @@ class StyledProgressBar(Static):
         )
         style = Style(color="green")
         style_1 = Style(color="blue")
-        self._bar = Progress(BarColumn(style=style, pulse_style=style_1))
+        self._bar = Progress(
+            BarColumn(style=style, pulse_style=style_1), disable=disable
+        )
         self._bar.add_task("", total=None)
 
     def on_mount(self) -> None:
