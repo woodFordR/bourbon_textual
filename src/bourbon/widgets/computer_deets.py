@@ -88,7 +88,6 @@ class ComputerDeets(Widget):
 
     @work(exclusive=True)
     async def watch_mac_os(self):
-        # cubic-bezier(.4,.24,.09,1.57)
         for tree in self.query(StyledTree):
             if tree:
                 tree.styles.animate("opacity", value=0.5, duration=0.5)
